@@ -1,0 +1,31 @@
+services:
+  # Веб-сервис Flask
+  - type: web
+    name: metadata-system
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn --chdir web app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DOCUMENTS_PATH
+        value: /opt/render/project/src/examples/sample_library
+      - key: PORT
+        generateValue: true
+    healthCheckPath: /health
+    autoDeploy: true
+
+  # Опционально: Meilisearch (требует платный план)
+  # - type: pserv
+  #   name: meilisearch
+  #   runtime: docker
+  #   plan: starter
+  #   dockerfilePath: ./Dockerfile.meilisearch
+  #   envVars:
+  #     - key: MEILI_MASTER_KEY
+  #       generateValue: true
+  #   disk:
+  #     name: meilisearch-data
+  #     mountPath: /meili_data
+  #     sizeGB: 1
