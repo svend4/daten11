@@ -1,0 +1,48 @@
+{
+  "name": "Научная библиотека (демо)",
+  "description": "Демонстрационная библиотека для примера работы системы метаданных",
+  "purpose": "Показать возможности системы организации файлов и метаданных",
+  "category": "science",
+  "tags": [
+    "демо",
+    "наука",
+    "библиотека"
+  ],
+  "created": "2025-12-30T13:00:00",
+  "updated": "2025-12-30T13:00:00",
+  "author": "system",
+  "language": "ru",
+  "status": "active",
+  "priority": "medium",
+  "statistics": {
+    "totalFiles": 3,
+    "totalSubfolders": 3,
+    "totalSize": 0,
+    "fileTypes": {}
+  },
+  "relatedFolders": [],
+  "quickLinks": [
+    {
+      "name": "Физика",
+      "path": "physics",
+      "description": "Раздел физики"
+    },
+    {
+      "name": "Математика",
+      "path": "mathematics",
+      "description": "Раздел математики"
+    },
+    {
+      "name": "Информатика",
+      "path": "computer_science",
+      "description": "Раздел информатики"
+    }
+  ],
+  "keywords": [
+    "наука",
+    "физика",
+    "математика",
+    "информатика"
+  ],
+  "notes": "Это демонстрационный пример организации научной библиотеки с использованием системы метаданных"
+}

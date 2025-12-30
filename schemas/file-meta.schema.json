@@ -1,0 +1,296 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yourusername/file-metadata-system/schemas/file-meta.schema.json",
+  "title": "File Metadata Schema",
+  "description": "Схема метаданных для файла (оперативный уровень)",
+  "type": "object",
+  "required": ["filename", "title", "fileType", "created", "updated"],
+  "properties": {
+    "filename": {
+      "type": "string",
+      "description": "Имя файла"
+    },
+    "title": {
+      "type": "string",
+      "description": "Читаемое название документа"
+    },
+    "description": {
+      "type": "string",
+      "description": "Краткое описание (2-3 предложения)"
+    },
+    "fileType": {
+      "type": "string",
+      "description": "Тип файла",
+      "enum": ["pdf", "txt", "docx", "md", "html", "epub", "odt", "rtf", "tex", "image", "video", "audio", "archive", "code", "data", "other"]
+    },
+    "mimeType": {
+      "type": "string",
+      "description": "MIME тип файла"
+    },
+    "size": {
+      "type": "integer",
+      "description": "Размер файла в байтах",
+      "minimum": 0
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата создания файла"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата последнего изменения"
+    },
+    "accessed": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата последнего доступа"
+    },
+    "author": {
+      "type": "string",
+      "description": "Автор документа"
+    },
+    "contributors": {
+      "type": "array",
+      "description": "Соавторы",
+      "items": {
+        "type": "string"
+      }
+    },
+    "language": {
+      "type": "string",
+      "description": "Язык документа (ru, en, de, etc.)",
+      "pattern": "^[a-z]{2}$"
+    },
+    "version": {
+      "type": "string",
+      "description": "Версия документа"
+    },
+    "category": {
+      "type": "string",
+      "description": "Категория содержимого"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Теги для классификации",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Ключевые слова из содержимого",
+      "items": {
+        "type": "string"
+      }
+    },
+    "subject": {
+      "type": "string",
+      "description": "Основная тема документа"
+    },
+    "abstract": {
+      "type": "string",
+      "description": "Аннотация или резюме"
+    },
+    "tableOfContents": {
+      "type": "array",
+      "description": "Оглавление документа",
+      "items": {
+        "type": "object",
+        "required": ["title", "level"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Название раздела"
+          },
+          "level": {
+            "type": "integer",
+            "description": "Уровень вложенности (1, 2, 3...)",
+            "minimum": 1
+          },
+          "page": {
+            "type": "integer",
+            "description": "Номер страницы (для PDF)",
+            "minimum": 1
+          },
+          "summary": {
+            "type": "string",
+            "description": "Краткое содержание раздела"
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "description": "Статус документа",
+      "enum": ["draft", "review", "final", "published", "archived", "deprecated"]
+    },
+    "importance": {
+      "type": "string",
+      "description": "Важность документа",
+      "enum": ["critical", "high", "medium", "low"]
+    },
+    "readingTime": {
+      "type": "integer",
+      "description": "Примерное время чтения в минутах",
+      "minimum": 0
+    },
+    "pageCount": {
+      "type": "integer",
+      "description": "Количество страниц",
+      "minimum": 0
+    },
+    "wordCount": {
+      "type": "integer",
+      "description": "Количество слов",
+      "minimum": 0
+    },
+    "source": {
+      "type": "object",
+      "description": "Источник документа",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL источника"
+        },
+        "publisher": {
+          "type": "string",
+          "description": "Издатель"
+        },
+        "publicationDate": {
+          "type": "string",
+          "format": "date",
+          "description": "Дата публикации"
+        },
+        "isbn": {
+          "type": "string",
+          "description": "ISBN для книг"
+        },
+        "doi": {
+          "type": "string",
+          "description": "DOI для научных статей"
+        }
+      }
+    },
+    "relatedFiles": {
+      "type": "array",
+      "description": "Связанные файлы",
+      "items": {
+        "type": "object",
+        "required": ["path", "relation"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Путь к связанному файлу"
+          },
+          "relation": {
+            "type": "string",
+            "description": "Тип связи (version, translation, reference, supplement)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание связи"
+          }
+        }
+      }
+    },
+    "references": {
+      "type": "array",
+      "description": "Библиографические ссылки",
+      "items": {
+        "type": "string"
+      }
+    },
+    "citations": {
+      "type": "array",
+      "description": "Цитаты из документа",
+      "items": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "Текст цитаты"
+          },
+          "page": {
+            "type": "integer",
+            "description": "Страница"
+          },
+          "context": {
+            "type": "string",
+            "description": "Контекст цитаты"
+          }
+        }
+      }
+    },
+    "summaryFile": {
+      "type": "string",
+      "description": "Путь к файлу с кратким содержанием"
+    },
+    "tocFile": {
+      "type": "string",
+      "description": "Путь к файлу с расширенным оглавлением"
+    },
+    "scriptsFolder": {
+      "type": "string",
+      "description": "Путь к папке со скриптами обработки"
+    },
+    "extractedText": {
+      "type": "object",
+      "description": "Информация об извлеченном тексте",
+      "properties": {
+        "method": {
+          "type": "string",
+          "description": "Метод извлечения (OCR, PDF parser, etc.)"
+        },
+        "confidence": {
+          "type": "number",
+          "description": "Уверенность в точности (0-1)",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "textFile": {
+          "type": "string",
+          "description": "Путь к файлу с извлеченным текстом"
+        }
+      }
+    },
+    "checksum": {
+      "type": "object",
+      "description": "Контрольные суммы файла",
+      "properties": {
+        "md5": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string"
+        }
+      }
+    },
+    "encryption": {
+      "type": "object",
+      "description": "Информация о шифровании",
+      "properties": {
+        "encrypted": {
+          "type": "boolean",
+          "description": "Зашифрован ли файл"
+        },
+        "method": {
+          "type": "string",
+          "description": "Метод шифрования"
+        }
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Дополнительные заметки"
+    },
+    "customFields": {
+      "type": "object",
+      "description": "Пользовательские поля",
+      "additionalProperties": true
+    }
+  }
+}
