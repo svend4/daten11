@@ -1,0 +1,192 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/yourusername/file-metadata-system/schemas/folder-meta.schema.json",
+  "title": "Folder Metadata Schema",
+  "description": "Схема метаданных для папки (тактический уровень)",
+  "type": "object",
+  "required": ["name", "description", "created", "updated"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Название папки"
+    },
+    "description": {
+      "type": "string",
+      "description": "Краткое описание назначения папки"
+    },
+    "purpose": {
+      "type": "string",
+      "description": "Детальное объяснение цели папки"
+    },
+    "category": {
+      "type": "string",
+      "description": "Основная категория (наука, проекты, документация, личное, архив)",
+      "enum": ["science", "projects", "documentation", "personal", "archive", "media", "education", "work", "other"]
+    },
+    "tags": {
+      "type": "array",
+      "description": "Теги для классификации",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата создания папки"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Дата последнего обновления"
+    },
+    "author": {
+      "type": "string",
+      "description": "Автор или владелец папки"
+    },
+    "language": {
+      "type": "string",
+      "description": "Основной язык содержимого (ru, en, de, etc.)",
+      "pattern": "^[a-z]{2}$"
+    },
+    "status": {
+      "type": "string",
+      "description": "Статус папки",
+      "enum": ["active", "archived", "in-progress", "completed", "deprecated"]
+    },
+    "priority": {
+      "type": "string",
+      "description": "Приоритет",
+      "enum": ["high", "medium", "low"]
+    },
+    "statistics": {
+      "type": "object",
+      "description": "Статистика содержимого",
+      "properties": {
+        "totalFiles": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "totalSubfolders": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "totalSize": {
+          "type": "integer",
+          "description": "Общий размер в байтах",
+          "minimum": 0
+        },
+        "fileTypes": {
+          "type": "object",
+          "description": "Количество файлов по типам",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "relatedFolders": {
+      "type": "array",
+      "description": "Связанные папки",
+      "items": {
+        "type": "object",
+        "required": ["path", "relation"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Путь к связанной папке"
+          },
+          "relation": {
+            "type": "string",
+            "description": "Тип связи (parent, child, related, reference)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание связи"
+          }
+        }
+      }
+    },
+    "quickLinks": {
+      "type": "array",
+      "description": "Быстрые ссылки на важные файлы",
+      "items": {
+        "type": "object",
+        "required": ["name", "path"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Название ссылки"
+          },
+          "path": {
+            "type": "string",
+            "description": "Относительный путь к файлу"
+          },
+          "description": {
+            "type": "string",
+            "description": "Описание файла"
+          }
+        }
+      }
+    },
+    "scripts": {
+      "type": "object",
+      "description": "Доступные скрипты для автоматизации",
+      "properties": {
+        "index": {
+          "type": "string",
+          "description": "Путь к скрипту индексации"
+        },
+        "search": {
+          "type": "string",
+          "description": "Путь к скрипту поиска"
+        },
+        "export": {
+          "type": "string",
+          "description": "Путь к скрипту экспорта"
+        },
+        "backup": {
+          "type": "string",
+          "description": "Путь к скрипту резервного копирования"
+        },
+        "custom": {
+          "type": "array",
+          "description": "Пользовательские скрипты",
+          "items": {
+            "type": "object",
+            "required": ["name", "path"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "keywords": {
+      "type": "array",
+      "description": "Ключевые слова для поиска",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Дополнительные заметки"
+    },
+    "customFields": {
+      "type": "object",
+      "description": "Пользовательские поля",
+      "additionalProperties": true
+    }
+  }
+}
