@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотека метаданных - Информационная операционная система</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="logo-icon" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <rect width="40" height="40" rx="8" fill="url(#gradient1)"/>
+                        <path d="M12 14h16M12 20h16M12 26h10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                        <defs>
+                            <linearGradient id="gradient1" x1="0" y1="0" x2="40" y2="40">
+                                <stop offset="0%" stop-color="#667eea"/>
+                                <stop offset="100%" stop-color="#764ba2"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="logo-text">
+                        <h1>Библиотека метаданных</h1>
+                        <p>Информационная операционная система</p>
+                    </div>
+                </div>
+
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()" title="Переключить тему">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 2v2m0 12v2m8-8h-2M4 10H2m14.364-5.364l-1.414 1.414M6.05 14.95l-1.414 1.414m9.9 0l-1.414-1.414M6.05 5.05L4.636 3.636M14 10a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <svg class="moon-icon hidden" width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                        </svg>
+                    </button>
+
+                    <button class="stats-btn" onclick="showStats()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+                        </svg>
+                        Статистика
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <div class="container">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-box-wrapper">
+                    <div class="search-box">
+                        <svg class="search-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            placeholder="Поиск по документам, тегам, категориям..."
+                            autocomplete="off"
+                        >
+                        <button class="clear-btn hidden" onclick="clearSearch()">
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"/>
+                            </svg>
+                        </button>
+                        <button class="search-btn" onclick="performSearch()">
+                            Найти
+                        </button>
+                    </div>
+
+                    <div class="quick-filters">
+                        <span class="filter-label">Быстрые фильтры:</span>
+                        <div class="filter-chips" id="quickFilters"></div>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="filters-panel" id="filtersPanel">
+                    <button class="toggle-filters" onclick="toggleFilters()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"/>
+                        </svg>
+                        <span>Фильтры</span>
+                        <svg class="chevron" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M4.293 5.293a1 1 0 011.414 0L8 7.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"/>
+                        </svg>
+                    </button>
+
+                    <div class="filters-content collapsed">
+                        <div class="filter-group">
+                            <label>Категория</label>
+                            <select id="categoryFilter">
+                                <option value="">Все категории</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Тип файла</label>
+                            <select id="typeFilter">
+                                <option value="">Все типы</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Сортировка</label>
+                            <select id="sortFilter">
+                                <option value="relevance">По релевантности</option>
+                                <option value="title">По названию</option>
+                                <option value="date">По дате</option>
+                                <option value="size">По размеру</option>
+                            </select>
+                        </div>
+
+                        <button class="reset-filters" onclick="resetFilters()">
+                            Сбросить фильтры
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section">
+                <div class="layout-grid">
+                    <!-- Sidebar -->
+                    <aside class="sidebar">
+                        <div class="sidebar-section">
+                            <h3>Категории</h3>
+                            <div class="facet-list" id="categoriesFacet">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section">
+                            <h3>Популярные теги</h3>
+                            <div class="tags-cloud" id="tagsFacet">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+
+                        <div class="sidebar-section">
+                            <h3>Типы файлов</h3>
+                            <div class="facet-list" id="typesFacet">
+                                <div class="loading-skeleton"></div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Main Results -->
+                    <div class="results-container">
+                        <div class="results-header">
+                            <div class="results-info">
+                                <h2 id="resultsTitle">Все документы</h2>
+                                <span class="results-count" id="resultsCount">Загрузка...</span>
+                            </div>
+
+                            <div class="view-options">
+                                <button class="view-btn active" data-view="grid" onclick="changeView('grid')">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM13 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2h-2z"/>
+                                    </svg>
+                                </button>
+                                <button class="view-btn" data-view="list" onclick="changeView('list')">
+                                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2zM3 16a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1v-2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="results" class="results-grid">
+                            <!-- Loading State -->
+                            <div class="loading-state">
+                                <div class="spinner"></div>
+                                <p>Загрузка документов...</p>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination hidden" id="pagination">
+                            <button class="page-btn" onclick="prevPage()">
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"/>
+                                </svg>
+                                Назад
+                            </button>
+                            <div class="page-numbers" id="pageNumbers"></div>
+                            <button class="page-btn" onclick="nextPage()">
+                                Вперед
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- File Details Modal -->
+    <div class="modal" id="fileModal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h2 id="modalTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="tabs">
+                    <button class="tab active" onclick="switchTab('info')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 9a1 1 0 012 0v4a1 1 0 11-2 0V9zm1-5a1 1 0 100 2 1 1 0 000-2z"/>
+                        </svg>
+                        Информация
+                    </button>
+                    <button class="tab" onclick="switchTab('summary')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+                            <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"/>
+                        </svg>
+                        Содержание
+                    </button>
+                    <button class="tab" onclick="switchTab('toc')">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                            <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"/>
+                        </svg>
+                        Оглавление
+                    </button>
+                </div>
+
+                <div class="tab-content" id="tabContent">
+                    <div id="tab-info" class="tab-panel active"></div>
+                    <div id="tab-summary" class="tab-panel"></div>
+                    <div id="tab-toc" class="tab-panel"></div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Закрыть</button>
+                <button class="btn btn-primary" onclick="downloadFile()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    Скачать файл
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Modal -->
+    <div class="modal" id="statsModal" onclick="closeModalOnBackdrop(event)">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h2>📊 Статистика библиотеки</h2>
+                <button class="modal-close" onclick="closeStatsModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="statsContent" class="stats-grid">
+                    <div class="loading-state">
+                        <div class="spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

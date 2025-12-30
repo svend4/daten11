@@ -12,7 +12,9 @@ import os
 # Добавить путь к tools
 sys.path.insert(0, str(Path(__file__).parent / 'tools'))
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_folder='static',
+            static_url_path='/static')
 
 # Конфигурация
 # В production путь к документам будет в переменной окружения
